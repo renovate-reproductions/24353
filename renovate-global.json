@@ -1,0 +1,54 @@
+{
+    "platform": "gitlab",
+    "timezone": "Europe/Brussels",
+    "gitAuthor": "Renovate Bot <renovate@example.com>",
+    "detectHostRulesFromEnv": true,
+    "autodiscover": true,
+    "autodiscoverFilter": [
+      "config/argocd"
+    ],
+    "extends": [
+      ":dependencyDashboard",
+      ":semanticPrefixFix",
+      ":separateMultipleMajorReleases",
+      ":label(dependency)",
+      ":prHourlyLimit4"
+    ],
+    "schedule": ["at any time"],
+    "pre-commit": {
+      "enabled": true
+    },
+    "argocd": {
+      "fileMatch": [
+        "-app\\.ya?ml$",
+        "addons\\.ya?ml$"
+      ]
+    },
+    "packageRules": [
+      {
+        "matchManagers": ["pre-commit"],
+        "matchUpdateTypes": ["minor", "patch"],
+        "groupName": "pre-commit hooks",
+        "automerge": true
+      },
+      {
+        "matchManagers": [
+          "pre-commit",
+          "gitlabci",
+          "gitlabci-include"
+        ],
+        "semanticCommitType": "chore"
+      }
+    ],
+    "hostRules": [
+      {
+        "hostType": "helm",
+        "matchHost": "my.registry",
+        "username": "renovate.svc"
+      }
+    ],
+    "lockFileMaintenance": {
+      "enabled": true
+    }
+  }
+  
